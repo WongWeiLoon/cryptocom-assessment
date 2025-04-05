@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     input: {
-        backgroundColor: '#f5f5f5',
+        // backgroundColor: '#f5f5f5',
         marginBottom: 10, // set a gap between text-input and Flatlist
     },
     rowContainer: {
