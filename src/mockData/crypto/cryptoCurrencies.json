@@ -34,5 +34,39 @@
     { "id": "NEO", "name": "NEO", "symbol": "NEO" },
     { "id": "ZEC", "name": "Zcash", "symbol": "ZEC" },
     { "id": "DASH", "name": "Dash", "symbol": "DASH" },
-    { "id": "XEM", "name": "NEM", "symbol": "XEM" }
+    { "id": "XEM", "name": "NEM", "symbol": "XEM" },
+
+    {"id": "1", "name": "Foobar", "symbol": "FOO"},
+    {"id": "2", "name": "Foobaz", "symbol": "FBZ"},
+    {"id": "3", "name": "Foodcoin", "symbol": "FDC"},
+    {"id": "4", "name": "Foolish", "symbol": "FLS"},
+    {"id": "5", "name": "Football", "symbol": "FTB"},
+
+    {"id": "6", "name": "Barfoo", "symbol": "BFO"},
+    {"id": "7", "name": "Afoobar", "symbol": "AFB"},
+    {"id": "8", "name": "Xfoo", "symbol": "XFO"},
+    {"id": "9", "name": "Zfoobar", "symbol": "ZFB"},
+    {"id": "10", "name": "Midfoo", "symbol": "MFO"},
+
+
+    {"id": "11", "name": "Ethereum Classic", "symbol": "ETC"},
+    {"id": "99", "name": "Cronos Classic", "symbol": "CCR"},
+    {"id": "13", "name": "Litecoin Pro", "symbol": "LTP"},
+    {"id": "14", "name": "Ripple X", "symbol": "XRP"},
+    {"id": "15", "name": "Stellar Lumens", "symbol": "XLM"},
+    {"id": "30", "name": "Cashcoin", "symbol": "CASH"},
+    {"id": "31", "name": "Troncash", "symbol": "TCASH"},
+    {"id": "32", "name": "Proton Cashless", "symbol": "PTC"},
+
+    {"id": "16", "name": "Tronclassic", "symbol": "TRC"},
+    {"id": "17", "name": "Classictron", "symbol": "CTR"},
+    {"id": "18", "name": "Prolite", "symbol": "PLT"},
+    {"id": "19", "name": "Xripple", "symbol": "XRP"},
+    {"id": "20", "name": "Lumensstellar", "symbol": "LST"},
+
+    {"id": "23", "name": "Electroneum", "symbol": "ETN"},
+    {"id": "24", "name": "EtherLite", "symbol": "ETL"},
+    {"id": "25", "name": "EtherZero", "symbol": "ETZ"},
+
+    {"id": "27", "name": "BetaCoin", "symbol": "BET"},
 ]

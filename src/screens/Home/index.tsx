@@ -19,7 +19,7 @@ const Home = () => {
   const [currencyList, setCurrencyList] = useState<CurrencyInfo[]>([]);
   
   const onHandleSearch = (searchKey: String) => {
-    console.log('Searching for :', searchKey)
+    // console.log('Searching for :', searchKey)
   }
 
   // Clearing all records from 'CryptoCurrency' and 'FiatCurrency' tables when 'Button 1' is pressed.

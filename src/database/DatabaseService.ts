@@ -2,13 +2,18 @@ import * as SQLite from 'expo-sqlite';
 import { CRYPTO_TABLE, CURRENCY_INFO_DB, FIAT_TABLE } from "@src/constants/dbConstants"
 import { CurrencyInfo } from './models/CurrencyInfo';
 
+let databaseInstance: any = null; 
+
 /**
  * Opens the SQLite database asynchronously.
  *
  * @returns {Promise<SQLite.SQLiteDatabase>} A Promise that resolves with the SQLiteDatabase object.
  */
 const openDatabase = () => {
-    return SQLite.openDatabaseAsync(CURRENCY_INFO_DB);
+    if (!databaseInstance) {
+        databaseInstance = SQLite.openDatabaseAsync(CURRENCY_INFO_DB);
+    }
+    return databaseInstance;
 }
 
 /**

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { StyleSheet, TextInput as RNTextInput, View, FlatList, Text, Image, FlatListProps } from 'react-native'
 import { Avatar, Icon, TextInput } from 'react-native-paper';
 
@@ -18,16 +18,46 @@ type CurrencyInfo = {
 const SearchInput = ({ onSearch, currencyList, flatListProps }: TextInputType) => {
   const inputRef = useRef<RNTextInput>(null);
 
-  const [searchQuery, setSearchQuery] = useState('');
   const [isFocused, setIsFocused] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredList, setFilteredList] = useState<CurrencyInfo[]>(currencyList);
 
-  const handleChangeText = (text: string) => {
-    setSearchQuery(text);
-    if (onSearch) onSearch(text);
+  useEffect(() => {
+    if (searchQuery.trim() === '') {
+      setFilteredList(currencyList);
+    } else {
+        const searchTerm = searchQuery.toLowerCase();
+
+        const filtered = currencyList.filter(item => {
+            const itemName = item.name.toLowerCase();
+            const itemSymbol = item.symbol.toLowerCase();
+
+            // Search Criteria 1: Starts with the search term
+            const startsWithSearchTerm = itemName.startsWith(searchTerm);
+
+            // Search Criteria 2: Contains space prefixed to search term
+            const containsSpacePrefixedSearchTerm = itemName.includes(' ' + searchTerm);
+
+            // Search Criteria 3: Symbol starts with the search term
+            const symbolSearchTerm = itemSymbol.startsWith(searchTerm);
+
+            return startsWithSearchTerm || containsSpacePrefixedSearchTerm || symbolSearchTerm;
+        });
+
+        setFilteredList(filtered);
+    }
+  }, [currencyList, searchQuery]);
+
+  const handleChangeText = (searchKey: string) => {
+    // console.log('Searching for :', searchKey)
+    setSearchQuery(searchKey);
+ 
+    if (onSearch) onSearch(searchKey);
   };
 
   const handleClear = () => {
     setSearchQuery('');
+    setFilteredList(currencyList); // Reset to original list
     setIsFocused(false);
     inputRef.current?.blur();
   };
@@ -70,7 +100,7 @@ const SearchInput = ({ onSearch, currencyList, flatListProps }: TextInputType) =
         />
 
         <FlatList
-            data={currencyList}
+            data={filteredList}
             renderItem={renderItem}
             keyExtractor={item => item.name}
             ListEmptyComponent={<EmptyView />}
