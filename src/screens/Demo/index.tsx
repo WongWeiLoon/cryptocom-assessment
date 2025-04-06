@@ -11,7 +11,7 @@ import { CurrencyInfo } from '@src/database/models/CurrencyInfo';
 import * as DatabaseService from '@src/database/DatabaseService'
 import { Snackbar } from 'react-native-paper'
 
-const Home = () => {
+const Demo = () => {
   const [snackbar, setSnackbar] = useState<{visible: boolean, message: string, key?: number}>({
     visible: false,
     message: '',
@@ -183,7 +183,7 @@ const Home = () => {
   )
 }
 
-export default Home;
+export default Demo;
 
 const styles = StyleSheet.create({
     mainContainer: {

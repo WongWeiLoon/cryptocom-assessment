@@ -15,7 +15,7 @@ type CurrencyInfo = {
     code?: string; // optional
 }
 
-const SearchInput = ({ onSearch, currencyList, flatListProps }: TextInputType) => {
+const CurrencyList = ({ onSearch, currencyList, flatListProps }: TextInputType) => {
   const inputRef = useRef<RNTextInput>(null);
 
   const [isFocused, setIsFocused] = useState(false);
@@ -110,7 +110,7 @@ const SearchInput = ({ onSearch, currencyList, flatListProps }: TextInputType) =
   )
 }
 
-export default SearchInput;
+export default CurrencyList;
 
 const renderItem = ({ item }: { item: CurrencyInfo }) => (
     <View style={styles.rowContainer}>
