@@ -1,10 +1,11 @@
 import React, { useRef, useState } from 'react'
-import { StyleSheet, TextInput as RNTextInput, View, FlatList, Text, Image } from 'react-native'
-import { Avatar, TextInput } from 'react-native-paper';
+import { StyleSheet, TextInput as RNTextInput, View, FlatList, Text, Image, FlatListProps } from 'react-native'
+import { Avatar, Icon, TextInput } from 'react-native-paper';
 
 type TextInputType = {
     onSearch: (text: string) => void,
     currencyList: CurrencyInfo[],
+    flatListProps?: Partial<FlatListProps<CurrencyInfo>>,
 }
 
 type CurrencyInfo = {
@@ -14,7 +15,7 @@ type CurrencyInfo = {
     code?: string; // optional
 }
 
-const SearchInput = ({ onSearch, currencyList }: TextInputType) => {
+const SearchInput = ({ onSearch, currencyList, flatListProps }: TextInputType) => {
   const inputRef = useRef<RNTextInput>(null);
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -73,6 +74,7 @@ const SearchInput = ({ onSearch, currencyList }: TextInputType) => {
             renderItem={renderItem}
             keyExtractor={item => item.name}
             ListEmptyComponent={<EmptyView />}
+            {...flatListProps}
         />
     </View>
   )
@@ -87,11 +89,12 @@ const renderItem = ({ item }: { item: CurrencyInfo }) => (
         <View style={styles.itemContainer}>
             <Text style={styles.nameTextStyle}>{item.name}</Text>
 
-            {
-                item.code == "" ? (
-                <Text>{item.symbol}</Text>
-                ) : null
-            }
+            {!item.code && (
+                <View style={styles.symbolContainer}>
+                    <Text style={styles.symbolText}>{item.symbol}</Text>
+                    <Icon source="chevron-right" size={25} />
+                </View>
+            )}
         </View>
 
 
@@ -133,12 +136,21 @@ const styles = StyleSheet.create({
         padding: 16,
         borderBottomWidth: 1,
         borderBottomColor: '#e0e0e0',
-        width: '100%'
+        width: '100%',
     },
     nameTextStyle: {
         fontSize: 20,
         fontWeight: '400',
         marginLeft: 3,
+    },
+    symbolContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    symbolText: {
+        fontSize: 20,
+        color: '#36454F',
+        marginEnd: 5,
     },
     emptyContainer: {
         flex: 1,

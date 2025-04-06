@@ -11,6 +11,7 @@ const FlatButton = ({ style, children, ...props }: ButtonType) => {
   return (
     <Button
         {...props}
+        mode="contained"
         style={[styles.button, style]}
         labelStyle={styles.buttonLabel} 
     >
@@ -23,7 +24,7 @@ export default FlatButton
 
 const styles = StyleSheet.create({
     button: {
-        borderRadius: 12,
+        borderRadius: 16,
         padding: 3,
         marginHorizontal: 8,
     },
