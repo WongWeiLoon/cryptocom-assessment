@@ -1,5 +1,5 @@
-import Home from "@src/screens/Home";
+import DemoScreen from "@src/screens/Demo";
 
 export default function Index() {
-  return <Home />;
+  return <DemoScreen />;
 }

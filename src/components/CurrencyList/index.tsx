@@ -114,7 +114,7 @@ export default SearchInput;
 
 const renderItem = ({ item }: { item: CurrencyInfo }) => (
     <View style={styles.rowContainer}>
-        <Avatar.Text size={32} label={item.name.charAt(0)} style={styles.avatar} />
+        <Avatar.Text size={36} label={item.name.charAt(0)} style={styles.avatar} />
 
         <View style={styles.itemContainer}>
             <Text style={styles.nameTextStyle}>{item.name}</Text>
@@ -164,6 +164,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         padding: 16,
+        paddingStart: 12,
         borderBottomWidth: 1,
         borderBottomColor: '#e0e0e0',
         width: '100%',

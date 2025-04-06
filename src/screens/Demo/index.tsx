@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native'
 
-import SearchInput from '@src/components/SearchInput'
+import CurrencyList from '@src/components/CurrencyList'
 import FlatButton from '@src/components/FlatButton'
 
 import cryptoData from '@src/mockData/crypto/cryptoCurrencies.json';
@@ -12,11 +12,20 @@ import * as DatabaseService from '@src/database/DatabaseService'
 import { Snackbar } from 'react-native-paper'
 
 const Home = () => {
-  const [snackbar, setSnackbar] = useState<{visible: boolean, message: string}>({
+  const [snackbar, setSnackbar] = useState<{visible: boolean, message: string, key?: number}>({
     visible: false,
     message: '',
+    key: 0, // Add a key to force re-render
   });
   const [currencyList, setCurrencyList] = useState<CurrencyInfo[]>([]);
+
+  const showSnackbar = (message: string) => {
+    setSnackbar({ 
+        visible: true, 
+        message,
+        key: Date.now()
+    })
+  };
   
   const onHandleSearch = (searchKey: String) => {
     // console.log('Searching for :', searchKey)
@@ -27,9 +36,9 @@ const Home = () => {
     try {
         await DatabaseService.clearAllData();
         setCurrencyList([]);
-        setSnackbar({ visible: true, message: 'Data cleared successfully!' });
+        showSnackbar('Data cleared successfully!');
     } catch (error) {
-        setSnackbar({ visible: true, message: `Failed to clear data due to ${error}` });
+        showSnackbar(`Failed to clear data due to ${error}`);
     }
   }
 
@@ -39,9 +48,9 @@ const Home = () => {
         await DatabaseService.insertCryptoCurrencyData(cryptoData);
         await DatabaseService.insertFiatCurrencyData(fiatData);
 
-        setSnackbar({ visible: true, message: 'Data inserted successfully!' });
+        showSnackbar('Data inserted successfully!');
     } catch (error) {
-        setSnackbar({ visible: true, message: `Failed to insert data due to ${error}` });
+        showSnackbar(`Failed to insert data due to ${error}`);
     }
   }
 
@@ -52,15 +61,16 @@ const Home = () => {
         // console.log({cryptosData})
 
         if (Array.isArray(cryptosData) && cryptosData.length === 0) {
-            setSnackbar({ visible: true, message: 'No crypto data yet. Please insert data first.' });
+            showSnackbar('No crypto data yet. Please insert data first.');
         } else if (Array.isArray(cryptosData) && cryptosData.length > 0) {
             // console.log('Crypto data to display:', cryptosData);
             setCurrencyList(cryptosData);
+            showSnackbar('Crypto data loaded!');
         } else {
-            setSnackbar({ visible: true, message: 'Unexpected data format received.' });
+            showSnackbar('Unexpected data format received.');
         }
     } catch (error) {
-        setSnackbar({ visible: true, message: `Failed to display Crypto-Currency due to ${error}` });
+        showSnackbar(`Failed to display Crypto-Currency due to ${error}`);
     }
   }
 
@@ -71,14 +81,15 @@ const Home = () => {
         // console.log({fiatsData})
 
         if (Array.isArray(fiatsData) && fiatsData.length === 0) {
-            setSnackbar({ visible: true, message: 'No fiat data yet. Please insert data first.' });
+            showSnackbar('No fiat data yet. Please insert data first.');
         } else if (Array.isArray(fiatsData) && fiatsData.length > 0) {
             setCurrencyList(fiatsData);
+            showSnackbar('Fiat data loaded!');
         } else {
-            setSnackbar({ visible: true, message: 'Unexpected data format received.' });
+            showSnackbar('Unexpected data format received.');
         }
     } catch (error) {
-        setSnackbar({ visible: true, message: `Failed to display Fiat-Currency due to ${error}` });
+        showSnackbar(`Failed to display Fiat-Currency due to ${error}`);
     }
   }
 
@@ -89,20 +100,21 @@ const Home = () => {
         // console.log({alldata})
 
         if (Array.isArray(alldata) && alldata.length === 0) {
-            setSnackbar({ visible: true, message: 'No Data yet. Please insert data first.' });
+            showSnackbar('No Data yet. Please insert data first.');
         } else if (Array.isArray(alldata) && alldata.length > 0) {
             setCurrencyList(alldata);
+            showSnackbar('All currency data loaded!');
         } else {
-            setSnackbar({ visible: true, message: 'Unexpected data format received.' });
+            showSnackbar('Unexpected data format received.');
         }
     } catch (error) {
-        setSnackbar({ visible: true, message: `Failed to display All-Currencies data due to ${error}` });
+        showSnackbar(`Failed to display All-Currencies data due to ${error}`);
     }
   }
 
   return (
     <View style={styles.mainContainer}>
-      <SearchInput 
+      <CurrencyList 
         onSearch={onHandleSearch}
         currencyList={currencyList}
         flatListProps={{
@@ -111,6 +123,8 @@ const Home = () => {
       />
 
       <View style={styles.buttonContainer}>
+        <Text style={styles.viewMoreText}>Scroll to See More</Text>
+
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.scrollViewContainer}>
             <FlatButton 
                 buttonColor="#007bff" 
@@ -177,8 +191,16 @@ const styles = StyleSheet.create({
         backgroundColor: '#f5f5f5',
         padding: 10,
     },
+    viewMoreText: {
+        textAlign: 'left',       
+        color: 'gray',           
+        marginTop: 15,    
+        marginHorizontal: 10,    
+        fontSize: 15,            
+    },
     scrollViewContainer: {
-        paddingVertical: Platform.OS === 'ios' ? 40 : 35,
+        paddingTop: Platform.OS === 'ios' ? 20 : 15,
+        paddingBottom: Platform.OS === 'ios' ? 45 : 30,
     },
     buttonContainer: {
         position: 'absolute',
