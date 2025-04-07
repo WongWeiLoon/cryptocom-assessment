@@ -34,9 +34,10 @@ Development Operating System:
 Operating System: macOs Sonoma 14.6
 
 Additional NPM Packages:
-react-native-paper: v5.13.1
-jest: v29.7.0
-babel-plugin-module-resolver: v5.0.2
+
+- react-native-paper: v5.13.1
+- jest: v29.7.0
+- babel-plugin-module-resolver: v5.0.2
 
 ## Installation Instructions
 
@@ -75,6 +76,7 @@ babel-plugin-module-resolver: v5.0.2
 
 ## Architecture
 
+```bash
 app/
 ├── index.tsx # Entry point
 android/
@@ -88,6 +90,7 @@ src/
 ├── screens/ # Application screens
 ├── database/ # Manages local database interactions, including schemas, queries, and data access logic.
 ├── mockData/ # Holds mock data used for development and testing purposes.
+```
 
 Key Design Patterns:
 
